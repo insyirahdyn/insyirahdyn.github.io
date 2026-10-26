@@ -1,0 +1,290 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectCover from '../../components/ProjectCover.astro';
+import TechTag from '../../components/TechTag.astro';
+import { projects, type Project } from '../../data/projects';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props as { project: Project };
+const others = projects.filter((p) => p.slug !== project.slug);
+---
+
+<Base title={project.title} description={project.summary}>
+  <article>
+    <header class="section project-head">
+      <div class="container">
+        <a class="back" href="/#projects">← All projects</a>
+        <span class="eyebrow">// {project.kind.toLowerCase()}</span>
+        <h1>{project.title}</h1>
+        <p class="subtitle">{project.subtitle}</p>
+        <p class="lead">{project.summary}</p>
+        <ul class="tags">
+          {project.stack.map((s) => <TechTag name={s} />)}
+        </ul>
+        <div class="btn-row links">
+          {project.liveUrl && <a class="btn btn-primary" href={project.liveUrl} target="_blank" rel="noopener">Live demo ↗</a>}
+          {project.repoUrl && <a class="btn" href={project.repoUrl} target="_blank" rel="noopener">Source code ↗</a>}
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      {
+        project.screenshots.length > 0 ? (
+          <section class="block">
+            <h2>Screenshots</h2>
+            <p class="hint">Click a screenshot to see it full size.</p>
+            <div class="gallery" data-zoom>
+              {project.screenshots.map((s) => (
+                <figure>
+                  <a href={s.src}>
+                    <img src={s.src} alt={s.caption} loading="lazy" width="1366" height="768" />
+                  </a>
+                  <figcaption>{s.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        ) : (
+          <section class="block">
+            <div class="card placeholder">
+              <ProjectCover project={project} />
+            </div>
+          </section>
+        )
+      }
+
+      <div class="columns">
+        <div class="main-col">
+          <section class="block">
+            <h2>The problem</h2>
+            <p>{project.problem}</p>
+          </section>
+
+          <section class="block">
+            <h2>Features</h2>
+            <div class="grid features">
+              {project.features.map((f) => (
+                <div class="card feature">
+                  <h3>{f.role}</h3>
+                  <ul>
+                    {f.items.map((i) => <li>{i}</li>)}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section class="block">
+            <h2>Technical highlights</h2>
+            {project.highlights.map((h) => (
+              <div class="highlight">
+                <h3>{h.title}</h3>
+                <p>{h.text}</p>
+              </div>
+            ))}
+          </section>
+        </div>
+
+        <aside class="side-col">
+          <div class="card side-card">
+            <h2>Security</h2>
+            <ul class="check">
+              {project.security.map((s) => <li>{s}</li>)}
+            </ul>
+          </div>
+          <div class="card side-card">
+            <h2>What I learned</h2>
+            <ul>
+              {project.learned.map((s) => <li>{s}</li>)}
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <nav class="next">
+        {others.map((p) => (
+          <a class="card next-card" href={`/projects/${p.slug}`}>
+            <span>Next project</span>
+            <strong>{p.title} →</strong>
+          </a>
+        ))}
+      </nav>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .project-head {
+    padding-bottom: 40px;
+  }
+  .back {
+    display: block;
+    width: fit-content;
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  h1 {
+    font-size: clamp(2.2rem, 5vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin: 0 0 16px;
+  }
+  .lead {
+    max-width: 720px;
+    font-size: 1.05rem;
+    margin: 0 0 20px;
+  }
+  .links {
+    margin-top: 24px;
+  }
+  .links:empty {
+    display: none;
+  }
+  .block {
+    margin-bottom: 48px;
+  }
+  .block h2 {
+    font-size: 1.5rem;
+  }
+  .hint {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: -6px 0 16px;
+  }
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: 20px;
+  }
+  .gallery figure {
+    margin: 0;
+  }
+  .gallery img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    cursor: zoom-in;
+    transition: transform 0.2s;
+  }
+  .gallery a:hover img {
+    transform: scale(1.02);
+  }
+  .gallery figcaption {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+  .placeholder {
+    overflow: hidden;
+    max-width: 720px;
+  }
+  .columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 40px;
+    align-items: start;
+  }
+  .features {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  }
+  .feature,
+  .side-card {
+    padding: 20px 22px;
+  }
+  .feature h3 {
+    font-size: 1.05rem;
+  }
+  .feature ul,
+  .side-card ul {
+    margin: 0;
+    padding-left: 1.1em;
+  }
+  .feature li + li,
+  .side-card li + li {
+    margin-top: 6px;
+  }
+  .highlight {
+    padding-left: 16px;
+    border-left: 3px solid var(--accent);
+    margin-bottom: 20px;
+  }
+  .highlight h3 {
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+  }
+  .highlight p {
+    margin: 0;
+  }
+  .side-col {
+    display: grid;
+    gap: 20px;
+    position: sticky;
+    top: 88px;
+  }
+  .side-card h2 {
+    font-size: 1.1rem;
+  }
+  .side-card {
+    font-size: 0.94rem;
+  }
+  .check {
+    list-style: none;
+    padding: 0 !important;
+  }
+  .check li {
+    position: relative;
+    padding-left: 26px;
+  }
+  .check li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .next {
+    display: grid;
+    padding: 8px 0 72px;
+  }
+  .next-card {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    color: var(--text);
+  }
+  .next-card span {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .next-card strong {
+    font-size: 1.2rem;
+  }
+  .next-card:hover {
+    text-decoration: none;
+    border-color: var(--accent);
+    color: var(--text);
+  }
+  @media (max-width: 860px) {
+    .columns {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .side-col {
+      position: static;
+      margin-bottom: 48px;
+    }
+  }
+</style>

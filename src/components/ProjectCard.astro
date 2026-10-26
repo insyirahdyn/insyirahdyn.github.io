@@ -1,0 +1,82 @@
+---
+import type { Project } from '../data/projects';
+import ProjectCover from './ProjectCover.astro';
+import Icon from './Icon.astro';
+import TechTag from './TechTag.astro';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const kindIcon = /final year/i.test(project.kind) ? 'graduation' : /group/i.test(project.kind) ? 'users' : 'code';
+---
+
+<article class="card project-card">
+  <a href={`/projects/${project.slug}`} class="cover-link" tabindex="-1" aria-hidden="true">
+    <ProjectCover project={project} />
+  </a>
+  <div class="body">
+    <span class="kind"><Icon name={kindIcon} size={14} />{project.kind}</span>
+    <h3><a href={`/projects/${project.slug}`}>{project.title}</a></h3>
+    <p class="subtitle">{project.subtitle}</p>
+    <p class="summary">{project.summary}</p>
+    <ul class="tags">
+      {project.stack.slice(0, 6).map((s) => <TechTag name={s} />)}
+    </ul>
+    <div class="btn-row actions">
+      <a class="btn btn-primary" href={`/projects/${project.slug}`}>View project →</a>
+      {project.liveUrl && <a class="btn" href={project.liveUrl} target="_blank" rel="noopener">Live demo ↗</a>}
+      {project.repoUrl && <a class="btn" href={project.repoUrl} target="_blank" rel="noopener">Code ↗</a>}
+    </div>
+  </div>
+</article>
+
+<style>
+  .project-card {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .project-card:hover {
+    transform: translateY(-3px);
+  }
+  .cover-link {
+    display: block;
+  }
+  .body {
+    padding: 22px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .kind {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  h3 {
+    font-size: 1.4rem;
+    margin: 4px 0 2px;
+  }
+  h3 a {
+    color: var(--text);
+  }
+  .subtitle {
+    margin: 0 0 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .summary {
+    margin: 0 0 16px;
+  }
+  .actions {
+    margin-top: auto;
+    padding-top: 20px;
+  }
+</style>

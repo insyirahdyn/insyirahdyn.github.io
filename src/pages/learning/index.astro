@@ -1,0 +1,91 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import LabCard from '../../components/LabCard.astro';
+import { certifications } from '../../data/site';
+
+const labs = (await getCollection('labs')).sort((a, b) => a.data.order - b.data.order);
+const categories = [...new Set(labs.map((l) => l.data.category))];
+---
+
+<Base title="Learning" description="Write-ups of my cybersecurity portfolio activities and my study notes.">
+  <section class="section">
+    <div class="container">
+      <a class="back" href="/">← Home</a>
+      <div class="section-head">
+        <span class="eyebrow">// certifications &amp; learning</span>
+        <h1>Portfolio activities and study notes</h1>
+        <p>
+          Portfolio activities from the {certifications[0].name}. Most are practice scenarios with fictional companies.
+          Each write-up shows the task, the questions, my answers and what I learned.
+        </p>
+      </div>
+
+      <div class="filters" role="group" aria-label="Filter by topic">
+        <button type="button" class="chip" aria-pressed="true" data-filter="all">All</button>
+        {categories.map((c) => <button type="button" class="chip" aria-pressed="false" data-filter={c}>{c}</button>)}
+      </div>
+
+      <div class="grid grid-3" id="lab-grid">
+        {labs.map((lab) => <LabCard lab={lab} />)}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('.chip');
+  const cards = document.querySelectorAll<HTMLElement>('#lab-grid [data-category]');
+  chips.forEach((chip) =>
+    chip.addEventListener('click', () => {
+      const f = chip.dataset.filter;
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+      cards.forEach((card) => (card.hidden = f !== 'all' && card.dataset.category !== f));
+    }),
+  );
+</script>
+
+<style>
+  .back {
+    display: inline-block;
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  h1 {
+    font-size: clamp(2rem, 4.5vw, 2.6rem);
+    font-weight: 800;
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+  .chip {
+    font: inherit;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    cursor: pointer;
+  }
+  .chip:hover {
+    color: var(--text);
+    border-color: var(--accent);
+  }
+  .chip[aria-pressed='true'] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  :global(:root[data-theme='dark']) .chip[aria-pressed='true'] {
+    color: #0d1117;
+  }
+  #lab-grid :global([hidden]) {
+    display: none;
+  }
+</style>

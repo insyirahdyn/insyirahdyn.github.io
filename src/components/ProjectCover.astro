@@ -1,0 +1,88 @@
+---
+import type { Project } from '../data/projects';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const cover = project.screenshots[0];
+---
+
+<div class="cover-wrap">
+  <div class="bar" aria-hidden="true">
+    <i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i>
+    <span>~/projects/{project.slug}</span>
+  </div>
+  {
+    cover ? (
+      <img class="cover" src={cover.src} alt={`${project.title}: ${cover.caption}`} loading="lazy" width="1366" height="768" />
+    ) : (
+      <div class="cover cover-placeholder" role="img" aria-label={`${project.title}: screenshots coming soon`}>
+        <code class="ph-title">&lt;{project.title} /&gt;</code>
+        <span class="ph-note">// screenshots coming soon</span>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .cover-wrap {
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+  .bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 12px;
+    background: rgb(15 22 35 / 0.55);
+    backdrop-filter: blur(4px);
+  }
+  .bar i {
+    display: block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+  }
+  .bar span {
+    margin-left: 8px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: #e5e7eb;
+  }
+  .cover {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+  .cover-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #1e3a8a, #2563eb 60%, #60a5fa);
+  }
+  .ph-title {
+    font-family: var(--mono);
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #fff;
+    background: none;
+    border: 0;
+    padding: 0;
+  }
+  .ph-note {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: rgb(255 255 255 / 0.75);
+  }
+</style>

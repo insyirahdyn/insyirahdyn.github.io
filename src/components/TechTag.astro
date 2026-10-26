@@ -1,0 +1,41 @@
+---
+import Icon from './Icon.astro';
+import { techIcon } from '../data/tech';
+
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+const t = techIcon(name);
+---
+
+<li class="tag tag-plain tech">
+  {t && 'logo' in t && !t.mono && <img class="logo" src={t.logo} alt="" width="15" height="15" />}
+  {t && 'logo' in t && t.mono && <span class="logo mono" style={`--logo: url("${t.logo}")`} aria-hidden="true"></span>}
+  {t && 'icon' in t && <Icon name={t.icon} size={14} />}
+  {name}
+</li>
+
+<style>
+  .tech {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .logo {
+    width: 15px;
+    height: 15px;
+    flex: none;
+  }
+  .mono {
+    display: inline-block;
+    background: var(--text);
+    -webkit-mask: var(--logo) center / contain no-repeat;
+    mask: var(--logo) center / contain no-repeat;
+  }
+  .tech :global(.icon) {
+    color: var(--accent);
+    flex: none;
+  }
+</style>

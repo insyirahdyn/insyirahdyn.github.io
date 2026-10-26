@@ -1,0 +1,84 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+
+interface Props {
+  lab: CollectionEntry<'labs'>;
+}
+
+const { lab } = Astro.props;
+const { title, category, summary, order } = lab.data;
+
+const categoryIcons: Record<string, string> = {
+  'Incident response': 'siren',
+  Networking: 'network',
+  'Risk & compliance': 'clipboard',
+  'Linux, SQL & Python': 'terminal',
+  'Study notes': 'book',
+};
+const isNotes = category === 'Study notes';
+const label = `${isNotes ? 'notes' : 'activity'}_${String(order).padStart(2, '0')}`;
+---
+
+<a class="card lab-card" href={`/learning/${lab.id}`} data-category={category}>
+  <div class="top">
+    <span class="icon-tile"><Icon name={categoryIcons[category] ?? 'file'} /></span>
+    <span class="id">{label}</span>
+  </div>
+  <span class="cat">{category.toLowerCase()}</span>
+  <h3>{title}</h3>
+  <p>{summary}</p>
+  <span class="more">Read write-up →</span>
+</a>
+
+<style>
+  .lab-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px 22px;
+    color: var(--text);
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .lab-card:hover {
+    text-decoration: none;
+    color: var(--text);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+  .id {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+  .cat {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  h3 {
+    font-family: inherit;
+    letter-spacing: -0.01em;
+    font-size: 1.05rem;
+    margin: 0;
+  }
+  p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.93rem;
+  }
+  .more {
+    margin-top: auto;
+    padding-top: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+</style>
