@@ -14,3 +14,6 @@ Thumbs.db
 
 # PDFs stay on my computer only; the site shows the .md versions
 Portfolio material/**/*.pdf
+
+# Original certificate files; the site uses the copy in public/certificates/
+Certificate/

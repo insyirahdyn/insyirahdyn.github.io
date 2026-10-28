@@ -24,7 +24,9 @@ export const certifications = [
   {
     name: 'Google Cybersecurity Certificate',
     issuer: 'Google, on Coursera',
-    detail: '8 courses: security foundations, risk management, networks, Linux and SQL, threats and vulnerabilities, detection and response, and Python automation.',
-    url: '', // link to your credential once you have it
+    date: 'Sep 2026',
+    detail: '9 courses: security foundations, risk management, networks, Linux and SQL, threats and vulnerabilities, detection and response, Python automation, and job readiness.',
+    url: 'https://coursera.org/verify/professional-cert/HCKH2CHR2WSA',
+    badge: '/certificates/google-cybersecurity-badge.png',
   },
 ];

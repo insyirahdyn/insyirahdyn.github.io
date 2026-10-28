@@ -89,12 +89,14 @@ const stackLines = [['React', 'Node.js'], ['MongoDB', 'PHP', 'SQL']];
 
       {certifications.map((c) => (
         <div class="card cert">
-          <div class="icon-tile cert-badge"><Icon name="award" size={26} /></div>
+          {c.badge
+            ? <img class="cert-img" src={c.badge} alt={`${c.name} badge`} width="120" height="120" loading="lazy" />
+            : <div class="icon-tile cert-badge"><Icon name="award" size={26} /></div>}
           <div>
             <h3>{c.name}</h3>
-            <p class="cert-issuer">{c.issuer}</p>
+            <p class="cert-issuer">{c.issuer}{c.date && ` · Issued ${c.date}`}</p>
             <p class="cert-detail">{c.detail}</p>
-            {c.url && <a href={c.url} target="_blank" rel="noopener">View credential ↗</a>}
+            {c.url && <a class="cert-link" href={c.url} target="_blank" rel="noopener">Verify on Coursera ↗</a>}
           </div>
         </div>
       ))}
@@ -319,6 +321,16 @@ const stackLines = [['React', 'Node.js'], ['MongoDB', 'PHP', 'SQL']];
     width: 48px;
     height: 48px;
     border-radius: 12px;
+  }
+  .cert-img {
+    flex-shrink: 0;
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+  }
+  .cert-link {
+    display: inline-block;
+    margin-top: 10px;
   }
   .more-row {
     margin-top: 24px;
