@@ -11,8 +11,6 @@ Final-year computing student at **UiTM Shah Alam**, building web apps and learni
 
 <br clear="right">
 
-This repo holds the source for my portfolio site (built with Astro, deployed to GitHub Pages), plus my cybersecurity project write-ups and study notes (in `Portfolio material/`).
-
 ## 📦 Projects
 
 Full details and screenshots are on [my portfolio](https://insyirahdyn.github.io).
