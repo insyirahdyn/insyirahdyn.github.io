@@ -6,9 +6,9 @@ export const site = {
   tagline:
     'I build full-stack web systems, from database design to the interface people use, and I am exploring cybersecurity.',
   location: 'Malaysia',
-  email: '',
+  email: 'insyirahdayana04@gmail.com',
   github: 'https://github.com/insyirahdyn',
-  linkedin: '',
+  linkedin: 'https://www.linkedin.com/in/insyirahdayana',
   cv: '', // e.g. '/cv.pdf' after putting cv.pdf in the public/ folder
 };
 

@@ -64,4 +64,6 @@ Incident response · Risk and vulnerability assessment · NIST CSF · Security a
 ---
 🌐 **Full portfolio:** [insyirahdyn.github.io](https://insyirahdyn.github.io)
 
+📫 **Contact:** [insyirahdayana04@gmail.com](mailto:insyirahdayana04@gmail.com) · [LinkedIn](https://www.linkedin.com/in/insyirahdayana)
+
 *Always learning, always building.* ✨
