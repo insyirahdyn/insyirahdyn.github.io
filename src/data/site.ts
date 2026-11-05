@@ -1,7 +1,7 @@
 // Your details. Leave a value as '' to hide that link or button on the site.
 export const site = {
   name: 'Insyirah',
-  role: 'Final-year computing student',
+  role: 'Final-year Bachelor of Computer Science (Hons.) student',
   university: 'UiTM Shah Alam',
   tagline:
     'I build full-stack web systems, from database design to the interface people use, and I am exploring cybersecurity.',
@@ -25,7 +25,7 @@ export const certifications = [
     name: 'Google Cybersecurity Certificate',
     issuer: 'Google, on Coursera',
     date: 'Sep 2026',
-    detail: '9 courses: security foundations, risk management, networks, Linux and SQL, threats and vulnerabilities, detection and response, Python automation, and job readiness.',
+    detail: '8 courses: security foundations, risk management, networks, Linux and SQL, threats and vulnerabilities, detection and response, Python automation, and job readiness.',
     url: 'https://coursera.org/verify/professional-cert/HCKH2CHR2WSA',
     badge: '/certificates/google-cybersecurity-badge.png',
   },

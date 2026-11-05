@@ -17,3 +17,9 @@ Portfolio material/**/*.pdf
 
 # Original certificate files; the site uses the copy in public/certificates/
 Certificate/
+
+# Private files (resume etc.), never upload
+others/
+
+# Course templates and exemplars, kept locally only
+portfolio material 2/

@@ -1,7 +1,7 @@
 # Hi, I'm Insyirah 👋
 <img src="images/profile.png" alt="Insyirah" width="200" align="right">
 
-Final-year computing student at **UiTM Shah Alam**, building web apps and learning how to make software that is actually useful to people. I completed the **Google Cybersecurity Certificate** and I am looking for an entry-level SOC or security analyst role.
+Final-year **Bachelor of Computer Science (Hons.)** student at **UiTM Shah Alam**, building web apps and learning how to make software that is actually useful to people. I completed the **Google Cybersecurity Certificate** and I am looking for an internship.
 
 - 🔭 Working on my Final Year Project (EMAS: Event Management System)
 - 🛡️ Completed the **Google Cybersecurity Certificate** (Google, on Coursera)
